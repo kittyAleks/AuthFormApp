@@ -5,11 +5,18 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Button } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient';
 
-export default function MainScreen({navigation}) {
-    // navigation.setOptions({
-    //     headerTitle: 'Main Screen',
-    //     headerBackground: () => <LinearGradient colors={['#F27527', '#F69493']} style={{ height: '100%' }} />,
-    // });
+export default function SettingsScreen({navigation}) {
+    navigation.setOptions({
+        headerTitle: () => (
+            <TouchableOpacity>
+                <Text style={{
+                    fontSize: 45,
+                    bottom: 10,
+                    color: '#fff',
+                }}>Viround</Text>
+            </TouchableOpacity>
+        ),
+    })
 
     return (
         <Container style={{
@@ -26,7 +33,7 @@ export default function MainScreen({navigation}) {
                     <View style={styles.center}>
                         <Text style={styles.title}>Welcome</Text>
                         <Text style={{ ...styles.title, ...styles.info }}>
-                            You are logged in as a registered user
+                            SettingsScreen
                         </Text>
                     </View>
 

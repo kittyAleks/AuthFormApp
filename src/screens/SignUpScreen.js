@@ -6,8 +6,6 @@ import { Button } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient';
 import Swagger from 'swagger-client'
 
-const url = 'https://testflatlist-5faf9.firebaseio.com/.json';
-
 export default function SignUpScreen({navigation}) {
     navigation.setOptions({
         headerTitle: 'Sign up',
@@ -34,7 +32,6 @@ export default function SignUpScreen({navigation}) {
     console.log('AAA formRegistration', formRegistration);
 
     const handleSubmitButton = () => {
-        console.log('Hqqqqqqq');
         Swagger({ url: 'https://dev.addictivelearning.io/docs/api-docs.json' })
             .then((client) => {
             console.log('QQQ client', client);
@@ -80,7 +77,7 @@ export default function SignUpScreen({navigation}) {
 
     const handleEmailChange = (val) => {
         console.log('Email value', val)
-        if(val.length === 0) {
+        if(val.length !== 0) {
             setData({
                 ...data,
                 email: val,

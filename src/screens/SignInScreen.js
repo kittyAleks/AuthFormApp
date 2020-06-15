@@ -69,8 +69,6 @@ export default function SignInScreen({navigation}) {
             alert('Please enter your Password');
             return;
         }
-
-
         Swagger({ url: 'https://dev.addictivelearning.io/docs/api-docs.json' })
             .then((client) => {
                 console.log('QQQ client', client);
