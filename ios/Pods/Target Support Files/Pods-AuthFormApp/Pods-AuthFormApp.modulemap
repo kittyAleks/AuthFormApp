@@ -1,0 +1,6 @@
+module Pods_AuthFormApp {
+  umbrella header "Pods-AuthFormApp-umbrella.h"
+
+  export *
+  module * { export * }
+}
