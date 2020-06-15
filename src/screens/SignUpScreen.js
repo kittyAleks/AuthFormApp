@@ -32,6 +32,17 @@ export default function SignUpScreen({navigation}) {
     console.log('AAA formRegistration', formRegistration);
 
     const handleSubmitButton = () => {
+        if (!data.email || data.email.length < 3) {
+            alert('Please enter your Email');
+            return;
+        } else if (!data.password) {
+            alert('Please enter your Password');
+            return;
+        } else if (!data.password_confirmation) {
+            alert('Please enter your Password');
+            return;
+        }
+
         Swagger({ url: 'https://dev.addictivelearning.io/docs/api-docs.json' })
             .then((client) => {
             console.log('QQQ client', client);
@@ -42,17 +53,18 @@ export default function SignUpScreen({navigation}) {
                 password_confirmation: data.password_confirmation,
             }).then(response => {
                 console.log('QQQ response', response)
-                        if (response.status === 200) {
-                            setIsRegistraionSuccess(true);
-                            navigation.navigate('SignIn');
-                            console.log('Registration Successful');
-                        } else {
-                            console.log('Registration Unsuccessful');
-                        }
+                    if (response.status === 200) {
+                        setIsRegistraionSuccess(true);
+                        navigation.navigate('SignIn');
+                        console.log('Registration Successful');
+                    } else {
+                        console.log('Registration Unsuccessful');
+                    }
             }) .catch((err) => {
                 console.log('Ошибка', err.response)
             })
         });
+
     };
     // if (isRegistraionSuccess) {
     //     return (

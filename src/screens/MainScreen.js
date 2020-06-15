@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {View, StatusBar, StyleSheet, ActivityIndicator, ImageBackground, Image, ScrollView, TouchableOpacity} from 'react-native'
 import { Container, InputGroup, Input, Text, Button as NBButton, Icon as NBIcon} from 'native-base'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import { Button } from 'react-native-elements'
-import LinearGradient from 'react-native-linear-gradient';
 
 export default function MainScreen({navigation}) {
     // navigation.setOptions({
@@ -38,39 +35,11 @@ export default function MainScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-    text: {
-        fontSize: 20,
-        textAlign: 'center',
-        marginVertical: 10,
-        color: 'white'
-    },
     mainTextStyle: {
         flexDirection: 'column',
         paddingHorizontal: 30,
         textAlign: 'center',
         paddingVertical: 200,
-    },
-    inputGroupStyle: {
-        marginTop: 15,
-        borderRadius: 10,
-        height: 50,
-        width: '100%',
-        backgroundColor: 'white',
-        opacity: 0.7,
-        overflow: 'hidden'
-    },
-    button: {
-        marginLeft: 5,
-        marginTop: 30,
-        height: 50,
-        borderRadius: 10,
-        backgroundColor: 'white',
-        opacity: 0.7,
-        borderWidth: 1,
-        borderColor: '#fff'
-    },
-    buttonSignUp: {
-        backgroundColor: '#ff9c9b'
     },
     titleSignUp: {
         color: 'white',

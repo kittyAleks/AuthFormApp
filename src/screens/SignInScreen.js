@@ -47,7 +47,6 @@ export default function SignInScreen({navigation}) {
         setData({
             ...data,
             secureTextEntry: !data.secureTextEntry
-
         })
     };
 
@@ -61,11 +60,10 @@ export default function SignInScreen({navigation}) {
     console.log('AAA formSignIn', formSignIn);
 
     const handleSubmitSignIn = () => {
-        if (!data.email) {
+        if (!data.email || data.email.length < 3) {
             alert('Please enter your Email');
             return;
-        }
-        if (!data.password) {
+        } else if (!data.password) {
             alert('Please enter your Password');
             return;
         }
