@@ -1,12 +1,31 @@
-import React, {useEffect, useState} from 'react'
-import {View, StatusBar, StyleSheet, ActivityIndicator, ImageBackground, Image, ScrollView, TouchableOpacity} from 'react-native'
-import { Container, InputGroup, Input, Text, Button as NBButton, Icon as NBIcon} from 'native-base'
+import React from 'react'
+import { View, StyleSheet, ImageBackground, Image, ScrollView, Alert, Button } from 'react-native'
+import { Container, Text } from 'native-base'
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function MainScreen({navigation}) {
-    // navigation.setOptions({
-    //     headerTitle: 'Main Screen',
-    //     headerBackground: () => <LinearGradient colors={['#F27527', '#F69493']} style={{ height: '100%' }} />,
-    // });
+    const signOut = () => {
+        Alert.alert(
+            'Logout',
+            'Are you sure? You want to logout?',
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => {
+                        return null;
+                    },
+                },
+                {
+                    text: 'Confirm',
+                    onPress: () => {
+                        AsyncStorage.clear();
+                        navigation.navigate('Back');
+                    },
+                },
+            ],
+            { cancelable: false }
+        );
+    };
 
     return (
         <Container style={{
@@ -26,10 +45,10 @@ export default function MainScreen({navigation}) {
                             You are logged in as a registered user
                         </Text>
                     </View>
+                    <Button title='Logout' size={30} onPress={signOut} color={'#ef003d'}/>
 
                 </ScrollView>
             </View>
-
         </Container>
     )
 }

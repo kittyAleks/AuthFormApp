@@ -4,12 +4,27 @@ import { Container, InputGroup, Input, Text, Button as NBButton, Icon as NBIcon}
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Button } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient';
-import Swagger from 'swagger-client'
+import Swagger from 'swagger-client';
+
+// import * as firebase from 'firebase';
+
+// const firebaseConfig = {
+//     apiKey: "AIzaSyDeNP4cEz68IBw-FPQbQT_atB1a8l4faWY",
+//     authDomain: "testflatlist-5faf9.firebaseapp.com",
+//     // databaseURL: "https://myapp-project-123.firebaseio.com",
+//     // projectId: "auth-form-app",
+//     // storageBucket: "myapp-project-123.appspot.com",
+//     // messagingSenderId: "65211879809",
+//     // appId: "1:65211879909:web:3ae38ef1cdcb2e01fe5f0c",
+//     // measurementId: "G-8GSGZQ44ST"
+// };
+//
+// firebase.initializeApp(firebaseConfig);
 
 export default function SignUpScreen({navigation}) {
     navigation.setOptions({
         headerTitle: 'Sign up',
-        headerBackground: () => <LinearGradient colors={['#F27527', '#F69493']} style={{ height: '100%' }} />,
+        headerBackground: () => <LinearGradient colors={['#F27527', '#F69493']} style={{height: '100%'}}/>,
     });
 
     const [data, setData] = useState({
@@ -39,10 +54,24 @@ export default function SignUpScreen({navigation}) {
             alert('Please enter your Password');
             return;
         } else if (!data.password_confirmation) {
-            alert('Please enter your Password');
+            alert('Please repeat your Password');
             return;
         }
-
+        // firebase
+        //     .auth()
+        //     .createUserWithEmailAndPassword(data.email, data.password)
+        //     .then((res) => {
+        //         console.log('EEE res', res);
+        //         console.log('User registered successfully!')
+        //         setData({
+        //             email: '',
+        //             password: ''
+        //         });
+        //         navigation.navigate('SignIn')
+        //     })
+        //     .catch((err) => {
+        //         console.log('Ошибка', err.message)
+        //     })
         Swagger({ url: 'https://dev.addictivelearning.io/docs/api-docs.json' })
             .then((client) => {
             console.log('QQQ client', client);
@@ -56,7 +85,7 @@ export default function SignUpScreen({navigation}) {
                     if (response.status === 200) {
                         setIsRegistraionSuccess(true);
                         navigation.navigate('SignIn');
-                        console.log('Registration Successful');
+                        console.log('Registration super');
                     } else {
                         console.log('Registration Unsuccessful');
                     }
@@ -132,7 +161,7 @@ export default function SignUpScreen({navigation}) {
         })
     };
 
-     return (
+    return (
         <Container style={{
             flex: 1,
         }}>

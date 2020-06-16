@@ -57,7 +57,6 @@ export default function SignInScreen({navigation}) {
         formSignIn.push(encodedKey + '=' + encodedValue);
     }
     formSignIn = formSignIn.join('&');
-    console.log('AAA formSignIn', formSignIn);
 
     const handleSubmitSignIn = () => {
         if (!data.email || data.email.length < 3) {
@@ -77,13 +76,15 @@ export default function SignInScreen({navigation}) {
                 }).then(response => {
                     console.log('QQQ response', response)
                     if (response.status === 200) {
+                        AsyncStorage.setItem('user_id', JSON.stringify(data));
+                        console.log('DDD response.data',  JSON.stringify(data));
                         navigation.navigate('MainScreen');
                         console.log('Login Successful');
                     } else {
                         setErrortext('Please check your email or password');
                     }
                 }) .catch((err) => {
-                    console.log('Error', err.response)
+                    console.log('AAA Error', err.message)
                 })
             });
     };
