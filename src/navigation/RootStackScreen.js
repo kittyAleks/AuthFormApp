@@ -2,7 +2,7 @@ import React  from 'react'
 import { StyleSheet } from 'react-native'
 
 /* Components */
-import SplashScreen from '../components/SplashScreen';
+import SplashScreen from '../screens/SplashScreen';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import MainScreen from '../screens/MainScreen';
@@ -11,6 +11,8 @@ import SettingsScreen from '../screens/SettingsScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {HeaderButtons} from "react-navigation-header-buttons";
+import LinearGradient from "react-native-linear-gradient";
 
 const defaultOptions = {
     headerStyle: {
@@ -21,7 +23,17 @@ const defaultOptions = {
     headerTitleStyle: {
         fontSize: 20
     }
-}
+};
+const optionsMainScreenHeader = {
+    headerTitle: 'Main Screen',
+    headerRight: () => <HeaderButtons>
+        <Ionicons style={{paddingRight: 10}}
+                  name='ios-camera' color='white' size={25} />
+    </HeaderButtons>,
+    headerLeft: () => <HeaderButtons>
+        <Ionicons style={{paddingLeft: 20}}  name='ios-menu' color='white' size={25} />
+    </HeaderButtons>
+};
 
 const RootStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -52,8 +64,10 @@ const RootStackScreen = () => (
             name='MainScreen'
             component={AllTabNavigation}
             options={{
-                headerTitle: 'Hello guys',
-                ...defaultOptions
+                headerTitle: 'Main Screen',
+                headerBackground: () => <LinearGradient colors={['#F27527', '#F69493']} style={{height: '100%'}}/>,
+                ...defaultOptions,
+                ...optionsMainScreenHeader,
             }}
         />
     </RootStack.Navigator>
@@ -87,9 +101,9 @@ const AllTabNavigation = () => (
         tabBarOptions={{
             paddingTop: 20,
             activeTintColor: 'white',
-            // showLabel: false
+            showLabel: false,
             style: {
-                height: 80,
+                height: 75,
                 paddingTop: 5,
                 backgroundColor: "rgba(255,125,41,0.54)",
             },
