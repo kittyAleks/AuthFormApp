@@ -14,7 +14,7 @@ export default function SplashScreen({navigation}) {
                 <ImageBackground
                     style={{ flex: 1, width: '100%', height: 1000}}
                     resizeMode='cover'
-                    source={require('../img/222.jpg')}
+                    source={require('../img/main_image.jpg')}
                     blurRadius={2}>
                 </ImageBackground>
                 <ScrollView style={styles.buttonGroupStyle}>

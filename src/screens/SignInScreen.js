@@ -1,13 +1,17 @@
 import React, {useEffect, useState} from 'react'
-import {View, StatusBar, StyleSheet, ActivityIndicator, ImageBackground, Image, ScrollView, TouchableOpacity} from 'react-native'
+import { View, StyleSheet, ActivityIndicator, ImageBackground, Image, ScrollView, TouchableOpacity } from 'react-native'
 import { Container, InputGroup, Input, Text, Button as NBButton, Icon as NBIcon} from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Button } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
-import AsyncStorage from '@react-native-community/async-storage';
 import Swagger from 'swagger-client';
+import * as firebase from "firebase";
 
-export default function SignInScreen({navigation}) {
+export default function SignInScreen({navigation, route}) {
+    // const item  = route.params;
+    // console.log('QQQ SignInScreen route.params', item)
+    // console.log('QQQ SignInScreen item', item)
+
     navigation.setOptions({
         headerTitle: 'Sign in',
         headerBackground: () => <LinearGradient colors={['#F27527', '#F69493']} style={{ height: '100%' }} />,
@@ -27,13 +31,13 @@ export default function SignInScreen({navigation}) {
             setData({
                 email: value,
                 ...data,
-                checkTextInputChange: true,
+                checkTextInputChange: false,
             })
         } else {
             setData({
                 ...data,
                 email: value,
-                checkTextInputChange: false,
+                checkTextInputChange: true,
             })
         }
 };
@@ -66,26 +70,37 @@ export default function SignInScreen({navigation}) {
             alert('Please enter your Password');
             return;
         }
-        Swagger({ url: 'https://dev.addictivelearning.io/docs/api-docs.json' })
-            .then((client) => {
-                console.log('QQQ client', client);
-                client.apis.auth.post_api_v1_login({
-                    method: 'POST',
-                    email: data.email,
-                    password: data.password,
-                }).then(response => {
-                    console.log('QQQ response', response)
-                    if (response.status === 200) {
-                        AsyncStorage.setItem('user_id', JSON.stringify(data));
-                        console.log('DDD response.data',  JSON.stringify(data));
-                        navigation.navigate('MainScreen');
-                        console.log('Login Successful');
-                    } else {
-                        setErrortext('Please check your email or password');
-                    }
-                }) .catch((err) => {
-                    console.log('AAA Error', err.message)
-                })
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                email: data.email,
+                password: data.password,
+            })
+        };
+
+        fetch('http://localhost/login', requestOptions )
+            .then(result => {
+                console.log('SignIn AAA result', result);
+                setData({
+                    email: result.email,
+                    password: result.password,
+                    password_confirmation: result.password_confirmation,
+                });
+                console.log('AAA SignIn newData ', data);
+                if (result.ok) {
+                    navigation.navigate('MainScreen',  {data: data})
+                } else {
+                    alert('Enter the data again');
+                }
+
+                // setData({
+                //     email: result.email,
+                //     password: result.password,
+                // });
+            })
+            .catch((err) => {
+                console.log('Ошибка', err.message);
             });
     };
 
@@ -97,7 +112,7 @@ export default function SignInScreen({navigation}) {
             <ImageBackground
                 style={{ flex: 1, width: '100%', height: 1000}}
                 resizeMode='cover'
-                source={require('../../src/img/222.jpg')}
+                source={require('../../src/img/main_image.jpg')}
                 blurRadius={2}>
             </ImageBackground>
             <ScrollView style={styles.mainTextStyle}>

@@ -736,6 +736,14 @@
   dependencies:
     "@types/hammerjs" "^2.0.36"
 
+"@expo/react-native-action-sheet@^3.6.0":
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/@expo/react-native-action-sheet/-/react-native-action-sheet-3.8.0.tgz#0db8b70ea8550ceb2983abda8584efa3a61d7389"
+  integrity sha512-tCfwysuqy0sfaN+aA98IKUrwCLKsbDHSYLcnHrx9wNbawOHNez8rSeFtieAS48/HyrPI75yg/ZGvxe6UsJRS8Q==
+  dependencies:
+    "@types/hoist-non-react-statics" "^3.3.1"
+    hoist-non-react-statics "^3.3.0"
+
 "@firebase/analytics-types@0.3.1":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@firebase/analytics-types/-/analytics-types-0.3.1.tgz#3c5f5d71129c88295e17e914e34b391ffda1723c"
@@ -1464,6 +1472,14 @@
     react-is "^16.13.0"
     use-subscription "^1.4.0"
 
+"@react-navigation/drawer@^5.8.2":
+  version "5.8.2"
+  resolved "https://registry.yarnpkg.com/@react-navigation/drawer/-/drawer-5.8.2.tgz#23714daf19a914d27396376206d0cd9b5fbdd46d"
+  integrity sha512-s/+5hh468LVkoEW/63MJdBOwcbniKtgWP0fcZMo5yG5NdYvPd8R+VJuBVGsRBSs1KwVIC4Gx+aRROMxe4bhW1w==
+  dependencies:
+    color "^3.1.2"
+    react-native-iphone-x-helper "^1.2.1"
+
 "@react-navigation/native@^5.5.1":
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/@react-navigation/native/-/native-5.5.1.tgz#e669d9561e54d86b1315637b8d5630dc55ee9383"
@@ -1555,6 +1571,14 @@
   version "2.0.36"
   resolved "https://registry.yarnpkg.com/@types/hammerjs/-/hammerjs-2.0.36.tgz#17ce0a235e9ffbcdcdf5095646b374c2bf615a4c"
   integrity sha512-7TUK/k2/QGpEAv/BCwSHlYu3NXZhQ9ZwBYpzr9tjlPIL2C5BeGhH3DmVavRx3ZNyELX5TLC91JTz/cen6AAtIQ==
+
+"@types/hoist-non-react-statics@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#1124aafe5118cb591977aeb1ceaaed1070eb039f"
+  integrity sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==
+  dependencies:
+    "@types/react" "*"
+    hoist-non-react-statics "^3.3.0"
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.3"
@@ -2705,7 +2729,7 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-dayjs@^1.8.15:
+dayjs@^1.8.15, dayjs@^1.8.26:
   version "1.8.28"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.8.28.tgz#37aa6201df483d089645cb6c8f6cef6f0c4dbc07"
   integrity sha512-ccnYgKC0/hPSGXxj7Ju6AV/BP4HUkXC2u15mikXT5mX9YorEaoi1bEKOmAqdkJHN4EEkmAf97SpH66Try5Mbeg==
@@ -3811,7 +3835,7 @@ hoist-non-react-statics@^2.3.1:
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
   integrity sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
 
-hoist-non-react-statics@^3.1.0:
+hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.0:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
   integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
@@ -6089,7 +6113,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.4"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.7.x:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -6199,6 +6223,18 @@ react-is@^16.12.0, react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.1, react-
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-native-animatable@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.3.3.tgz#a13a4af8258e3bb14d0a9d839917e9bb9274ec8a"
+  integrity sha512-2ckIxZQAsvWn25Ho+DK3d1mXIgj7tITkrS4pYDvx96WyOttSvzzFeQnM2od0+FUMzILbdHDsDEqZvnz1DYNQ1w==
+  dependencies:
+    prop-types "^15.7.2"
+
+react-native-communications@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-communications/-/react-native-communications-2.2.1.tgz#7883b56b20a002eeb790c113f8616ea8692ca795"
+  integrity sha1-eIO1ayCgAu63kMET+GFuqGksp5U=
+
 react-native-drawer@2.5.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/react-native-drawer/-/react-native-drawer-2.5.1.tgz#08b9314184f48c724f1b467f8859797369798654"
@@ -6247,6 +6283,21 @@ react-native-gesture-handler@^1.6.1:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
+react-native-gifted-chat@^0.16.2:
+  version "0.16.2"
+  resolved "https://registry.yarnpkg.com/react-native-gifted-chat/-/react-native-gifted-chat-0.16.2.tgz#4158ea3ddd71d4d5a51fd23bc76769063f06adac"
+  integrity sha512-PzyDLYDenwQg0/XvQB0rNBB2ZTF2tUtmR49xc5B3K50WRbZdfeJAYeThFEhMB47hUHwBFuS4KNRLW9GpglvBjg==
+  dependencies:
+    "@expo/react-native-action-sheet" "^3.6.0"
+    dayjs "^1.8.26"
+    prop-types "^15.7.2"
+    react-native-communications "^2.2.1"
+    react-native-iphone-x-helper "^1.2.1"
+    react-native-lightbox "^0.8.1"
+    react-native-parsed-text "0.0.22"
+    react-native-typing-animation "^0.1.7"
+    uuid "3.4.0"
+
 react-native-iphone-x-helper@^1.0.3, react-native-iphone-x-helper@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
@@ -6260,10 +6311,24 @@ react-native-keyboard-aware-scroll-view@0.9.1:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
 
+react-native-lightbox@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/react-native-lightbox/-/react-native-lightbox-0.8.1.tgz#4e561ec46e61617a0f3f12c88ec2695360998878"
+  integrity sha512-TFZA6iKEEHpAUIXjMTRb6vx0/9rHgEKy3ZBiRAy295PwldYg5c8opwnbyURLIl522ykeqhVx9uGdXjSMIowLvA==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-linear-gradient@^2.5.6:
   version "2.5.6"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
   integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
+
+react-native-parsed-text@0.0.22:
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/react-native-parsed-text/-/react-native-parsed-text-0.0.22.tgz#a23c756eaa5d6724296814755085127f9072e5f5"
+  integrity sha512-hfD83RDXZf9Fvth3DowR7j65fMnlqM9PpxZBGWkzVcUTFtqe6/yPcIoIAgrJbKn6YmtzkivmhWE2MCE4JKBXrQ==
+  dependencies:
+    prop-types "^15.7.x"
 
 react-native-platform-touchable@^1.1.1:
   version "1.1.1"
@@ -6299,6 +6364,11 @@ react-native-status-bar-height@^2.2.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.5.0.tgz#bc0fb85230603850aab9667ee8111a62954de90c"
   integrity sha512-sYBCPYA/NapBSHkdm/IVL4ID3LLlIuLqINi2FBDyMkc2BU9pfSGOtkz9yfxoK39mYJuTrlTOQ7mManARUsYDSA==
+
+react-native-typing-animation@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/react-native-typing-animation/-/react-native-typing-animation-0.1.7.tgz#8f2cf08d9400ae543a110292eb7d71523dda5528"
+  integrity sha512-4H3rF9M+I2yAZpYJcY0Mb29TXkn98QK12rrKSY6LZj1BQD9NNmRZuNXzwX4XHapsIz+N/J8M3p27FOQPbfzqeg==
 
 react-native-vector-icons@^6.6.0:
   version "6.6.0"
@@ -7649,7 +7719,7 @@ utils-merge@1.0.1:
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
 
-uuid@^3.3.2:
+uuid@3.4.0, uuid@^3.3.2:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==

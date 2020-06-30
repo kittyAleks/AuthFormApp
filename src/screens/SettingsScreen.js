@@ -11,7 +11,7 @@ export default function SettingsScreen({navigation}) {
                 <ImageBackground
                     style={{ flex: 1, width: '100%', height: 1000}}
                     resizeMode='cover'
-                    source={require('../../src/img/222.jpg')}
+                    source={require('../../src/img/main_image.jpg')}
                     blurRadius={2}>
                 </ImageBackground>
                 <ScrollView style={styles.mainTextStyle}>

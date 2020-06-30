@@ -4,10 +4,10 @@ import { Container, InputGroup, Input, Text, Button as NBButton, Icon as NBIcon}
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Button } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient';
-import Swagger from 'swagger-client';
+// import Swagger from 'swagger-client';
 
 // import * as firebase from 'firebase';
-
+//
 // const firebaseConfig = {
 //     apiKey: "AIzaSyDeNP4cEz68IBw-FPQbQT_atB1a8l4faWY",
 //     authDomain: "testflatlist-5faf9.firebaseapp.com",
@@ -18,7 +18,7 @@ import Swagger from 'swagger-client';
 //     // appId: "1:65211879909:web:3ae38ef1cdcb2e01fe5f0c",
 //     // measurementId: "G-8GSGZQ44ST"
 // };
-//
+
 // firebase.initializeApp(firebaseConfig);
 
 export default function SignUpScreen({navigation}) {
@@ -36,6 +36,7 @@ export default function SignUpScreen({navigation}) {
         confirm_secureTextEntry: true,
     });
     const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     var formRegistration = [];
     for (let key in data) {
@@ -44,9 +45,9 @@ export default function SignUpScreen({navigation}) {
         formRegistration.push(encodedKey + '=' + encodedValue);
     }
     formRegistration = formRegistration.join('&');
-    console.log('AAA formRegistration', formRegistration);
+    console.log('TTT formRegistration', formRegistration);
 
-    const handleSubmitButton = () => {
+    const handleSubmitButton = async () => {
         if (!data.email || data.email.length < 3) {
             alert('Please enter your Email');
             return;
@@ -56,6 +57,8 @@ export default function SignUpScreen({navigation}) {
         } else if (!data.password_confirmation) {
             alert('Please repeat your Password');
             return;
+        } else {
+            setIsLoading(isLoading)
         }
         // firebase
         //     .auth()
@@ -65,34 +68,71 @@ export default function SignUpScreen({navigation}) {
         //         console.log('User registered successfully!')
         //         setData({
         //             email: '',
-        //             password: ''
+        //             password: '',
+        //             password_confirmation: ''
         //         });
+        //         setIsLoading(isLoading)
         //         navigation.navigate('SignIn')
         //     })
         //     .catch((err) => {
         //         console.log('Ошибка', err.message)
         //     })
-        Swagger({ url: 'https://dev.addictivelearning.io/docs/api-docs.json' })
-            .then((client) => {
-            console.log('QQQ client', client);
-            client.apis.auth.post_api_v1_register({
-                method: 'POST',
+
+
+         const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
                 email: data.email,
                 password: data.password,
                 password_confirmation: data.password_confirmation,
-            }).then(response => {
-                console.log('QQQ response', response)
-                    if (response.status === 200) {
-                        setIsRegistraionSuccess(true);
-                        navigation.navigate('SignIn');
-                        console.log('Registration super');
-                    } else {
-                        console.log('Registration Unsuccessful');
-                    }
-            }) .catch((err) => {
-                console.log('Ошибка', err.response)
             })
+        };
+        fetch('http://localhost/register', requestOptions)
+            .then((result) => {
+                // localStorage.setItem('currentUser', JSON.stringify(result));
+            console.log('AAA result',result);
+            setData({
+                // data: result
+                email: result.email,
+                password: result.password,
+                password_confirmation: result.password_confirmation,
+            });
+                console.log('AAA data result',data);
+            if (result.status === 200) {
+                setIsRegistraionSuccess(true);
+                navigation.navigate('SignIn', {data: data});
+                console.log('Registration super');
+            } else {
+                console.log('Registration Unsuccessful');
+            }
+        })
+        .catch((err) => {
+            console.log('Ошибка', err.message);
         });
+
+
+        // Swagger({ url: 'https://dev.addictivelearning.io/docs/api-docs.json' })
+        //     .then((client) => {
+        //     console.log('QQQ client', client);
+        //     client.apis.auth.post_api_v1_register({
+        //         method: 'POST',
+        //         email: data.email,
+        //         password: data.password,
+        //         password_confirmation: data.password_confirmation,
+        //     }).then(response => {
+        //         console.log('QQQ response', response)
+        //             if (response.status === 200) {
+        //                 setIsRegistraionSuccess(true);
+        //                 navigation.navigate('SignIn');
+        //                 console.log('Registration super');
+        //             } else {
+        //                 console.log('Registration Unsuccessful');
+        //             }
+        //     }) .catch((err) => {
+        //         console.log('Ошибка', err.response)
+        //     })
+        // });
 
     };
     // if (isRegistraionSuccess) {
@@ -114,6 +154,13 @@ export default function SignUpScreen({navigation}) {
     //         </View>
     //     );
     // }
+    if(isLoading){
+        return(
+            <View>
+                <ActivityIndicator size="large" color={'#ff2061'}/>
+            </View>
+        )
+    }
 
 
     const handleEmailChange = (val) => {
@@ -169,7 +216,7 @@ export default function SignUpScreen({navigation}) {
                 <ImageBackground
                     style={{ flex: 1, width: '100%', height: 1000}}
                     resizeMode='cover'
-                    source={require('../../src/img/222.jpg')}
+                    source={require('../../src/img/main_image.jpg')}
                     blurRadius={2}>
                 </ImageBackground>
                 <ScrollView style={styles.mainTextStyle}>
