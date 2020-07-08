@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import { View, StyleSheet, ActivityIndicator, ImageBackground, Image, ScrollView, TouchableOpacity } from 'react-native'
 import { Container, InputGroup, Input, Text, Button as NBButton, Icon as NBIcon} from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -6,6 +6,7 @@ import { Button } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
 import Swagger from 'swagger-client';
 import * as firebase from "firebase";
+import {MainContext} from "../context/mainContext";
 
 export default function SignInScreen({navigation, route}) {
     // const item  = route.params;
@@ -16,17 +17,16 @@ export default function SignInScreen({navigation, route}) {
         headerTitle: 'Sign in',
         headerBackground: () => <LinearGradient colors={['#F27527', '#F69493']} style={{ height: '100%' }} />,
     });
-    let [errortext, setErrortext] = useState('');
 
-    const [data, setData] = useState({
-        email: '',
-        password: '',
-        checkTextInputChange: false,
-        secureTextEntry: true
-    });
+    // const [data, setData] = useState({
+    //     email: '',
+    //     password: '',
+    //     checkTextInputChange: false,
+    //     secureTextEntry: true
+    // });
+    const [data, setData, requestOptions] = useContext(MainContext);
 
     const textInputChange = (value) => {
-    console.log('QQQ email value', value)
         if(value.length === 0) {
             setData({
                 email: value,
@@ -62,7 +62,7 @@ export default function SignInScreen({navigation, route}) {
     }
     formSignIn = formSignIn.join('&');
 
-    const handleSubmitSignIn = () => {
+     const handleSubmitSignIn = async () => {
         if (!data.email || data.email.length < 3) {
             alert('Please enter your Email');
             return;
@@ -70,34 +70,20 @@ export default function SignInScreen({navigation, route}) {
             alert('Please enter your Password');
             return;
         }
-        const requestOptions = {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                email: data.email,
-                password: data.password,
-            })
-        };
 
-        fetch('http://localhost/login', requestOptions )
+        await fetch('http://localhost/login', requestOptions )
             .then(result => {
-                console.log('SignIn AAA result', result);
-                setData({
-                    email: result.email,
-                    password: result.password,
-                    password_confirmation: result.password_confirmation,
-                });
-                console.log('AAA SignIn newData ', data);
+                console.log('AAA SignIn result', result);
+                // setData({
+                //     email: result.email,
+                //     password: result.password,
+                //     password_confirmation: result.password_confirmation,
+                // });
                 if (result.ok) {
                     navigation.navigate('MainScreen',  {data: data})
                 } else {
                     alert('Enter the data again');
                 }
-
-                // setData({
-                //     email: result.email,
-                //     password: result.password,
-                // });
             })
             .catch((err) => {
                 console.log('Ошибка', err.message);

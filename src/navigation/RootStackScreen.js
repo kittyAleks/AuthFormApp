@@ -21,6 +21,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {HeaderButtons} from "react-navigation-header-buttons";
 import LinearGradient from "react-native-linear-gradient";
 import Fontisto from "react-native-vector-icons/Fontisto";
+import ProfileScreen from "../screens/ProfileScreen";
 
 const defaultOptions = {
     headerStyle: {
@@ -34,10 +35,10 @@ const defaultOptions = {
 };
 const optionsMainScreenHeader = {
     headerTitle: 'Alpaca Store',
-    headerRight: () => <HeaderButtons>
-        <Ionicons style={{paddingRight: 10}}
-                  name='ios-basket' color='white' size={23} />
-    </HeaderButtons>,
+    // headerRight: () => <HeaderButtons>
+    //     <Ionicons style={{paddingRight: 10}}
+    //               name='ios-basket' color='white' size={23} />
+    // </HeaderButtons>,
     headerLeft: () => <HeaderButtons>
         <Ionicons onPress={() => alert('Hello')} style={{paddingLeft: 20}}  name='ios-menu' color='white' size={25} />
     </HeaderButtons>
@@ -124,6 +125,15 @@ const TelegramNavigator = () => (
         />
     </TelegramStack.Navigator>
 );
+const ProfileStack = createStackNavigator();
+const ProfileNavigator = () => (
+    <ProfileStack.Navigator>
+        <ProfileStack.Screen
+            name='ProfileScreen'
+            component={ProfileScreen}
+        />
+    </ProfileStack.Navigator>
+);
 const SettingsStack = createStackNavigator();
 const SettingsNavigator = () => (
     <SettingsStack.Navigator>
@@ -169,6 +179,16 @@ const AllTabNavigation = () => (
                 tabBarLabel: 'Telegram',
                 tabBarIcon: ({ color, size }) => (
                     <Fontisto size={18} color={'white'} name='telegram'/>
+                ),
+            }}
+        />
+        <Tab.Screen
+            name='Profile'
+            component={ProfileNavigator}
+            options={{
+                tabBarLabel: 'Profile',
+                tabBarIcon: ({ color, size }) => (
+                    <Ionicons size={18} color={'white'} name='ios-person'/>
                 ),
             }}
         />

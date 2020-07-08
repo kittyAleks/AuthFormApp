@@ -1,13 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import {View, StatusBar, StyleSheet, ActivityIndicator, ImageBackground, Image, ScrollView, TouchableOpacity} from 'react-native'
 import { Container, InputGroup, Input, Text, Button as NBButton, Icon as NBIcon} from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Button } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient';
-// import Swagger from 'swagger-client';
-
+import {MainContext} from "../context/mainContext";
 // import * as firebase from 'firebase';
-//
+
 // const firebaseConfig = {
 //     apiKey: "AIzaSyDeNP4cEz68IBw-FPQbQT_atB1a8l4faWY",
 //     authDomain: "testflatlist-5faf9.firebaseapp.com",
@@ -27,14 +26,8 @@ export default function SignUpScreen({navigation}) {
         headerBackground: () => <LinearGradient colors={['#F27527', '#F69493']} style={{height: '100%'}}/>,
     });
 
-    const [data, setData] = useState({
-        email: '',
-        password: '',
-        password_confirmation: '',
-        checkTextInputChange: false,
-        secureTextEntry: true,
-        confirm_secureTextEntry: true,
-    });
+    const [data, setData, requestOptions] = useContext(MainContext);
+
     const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -45,7 +38,6 @@ export default function SignUpScreen({navigation}) {
         formRegistration.push(encodedKey + '=' + encodedValue);
     }
     formRegistration = formRegistration.join('&');
-    console.log('TTT formRegistration', formRegistration);
 
     const handleSubmitButton = async () => {
         if (!data.email || data.email.length < 3) {
@@ -78,28 +70,25 @@ export default function SignUpScreen({navigation}) {
         //         console.log('Ошибка', err.message)
         //     })
 
-
-         const requestOptions = {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                email: data.email,
-                password: data.password,
-                password_confirmation: data.password_confirmation,
-            })
-        };
+        //  const requestOptions = {
+        //     method: 'POST',
+        //     headers: {'Content-Type': 'application/json'},
+        //     body: JSON.stringify({
+        //         email: data.email,
+        //         password: data.password,
+        //         password_confirmation: data.password_confirmation,
+        //     })
+        // };
         fetch('http://localhost/register', requestOptions)
             .then((result) => {
                 // localStorage.setItem('currentUser', JSON.stringify(result));
-            console.log('AAA result',result);
+            console.log('AAA SignUp result',result);
             setData({
-                // data: result
                 email: result.email,
                 password: result.password,
                 password_confirmation: result.password_confirmation,
             });
-                console.log('AAA data result',data);
-            if (result.status === 200) {
+            if (result.ok) {
                 setIsRegistraionSuccess(true);
                 navigation.navigate('SignIn', {data: data});
                 console.log('Registration super');
@@ -162,9 +151,7 @@ export default function SignUpScreen({navigation}) {
         )
     }
 
-
     const handleEmailChange = (val) => {
-        console.log('Email value', val)
         if(val.length !== 0) {
             setData({
                 ...data,
