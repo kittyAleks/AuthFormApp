@@ -2,7 +2,9 @@ export const DATA = [
     {
         color: "#000000",
         created_at: new Date().toJSON(),
-        description: "Donations come from the heart. Our goal here was to let people know that every donation, be it ever so small, can help. No matter if they donate to small businesses, restaurants or local stores in their neighborhood – it all matters. Image created by Loved GmbH. Submitted for United Nations Global Call Out To Creatives - help stop the spread of COVID-19.",
+        description: "Donations come from the heart. Our goal here was to let people know that every donation, be it ever so small, " +
+            "can help. No matter if they donate to small businesses, restaurants or local stores in their neighborhood – it all matters. " +
+            "Image created by Loved GmbH. Submitted for United Nations Global Call Out To Creatives - help stop the spread of COVID-19.",
         id: "1",
         liked: false,
         product_name: "Accessories",

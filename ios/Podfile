@@ -82,6 +82,10 @@ target 'AuthFormApp' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
+  pod 'RNShare', :path => '../node_modules/react-native-share'
+
+  pod 'react-native-view-shot', :path => '../node_modules/react-native-view-shot'
+
   target 'AuthFormAppTests' do
     inherit! :complete
     # Pods for testing

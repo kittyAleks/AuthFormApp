@@ -88,7 +88,9 @@ export default function SignUpScreen({navigation}) {
                 password: result.password,
                 password_confirmation: result.password_confirmation,
             });
-            if (result.ok) {
+                console.log('AAA SignUp data', data);
+
+                if (result.ok) {
                 setIsRegistraionSuccess(true);
                 navigation.navigate('SignIn', {data: data});
                 console.log('Registration super');

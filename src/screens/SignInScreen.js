@@ -4,8 +4,6 @@ import { Container, InputGroup, Input, Text, Button as NBButton, Icon as NBIcon}
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Button } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
-import Swagger from 'swagger-client';
-import * as firebase from "firebase";
 import {MainContext} from "../context/mainContext";
 
 export default function SignInScreen({navigation, route}) {
@@ -46,7 +44,7 @@ export default function SignInScreen({navigation, route}) {
             ...data,
             password: val,
         })
-};
+    };
     const updateSecureTextEntry = () => {
         setData({
             ...data,
@@ -89,6 +87,20 @@ export default function SignInScreen({navigation, route}) {
                 console.log('Ошибка', err.message);
             });
     };
+
+     const loginFb = async () => {
+         try {
+             let result = LoginManager.logInWithPermissions(['public_profile'])
+             if (result.isCancelled) {
+                 alert('Login was cancelled');
+             } else {
+                 alert('Login was successful with permissions: '
+                     + result.grantedPermissions.toString());
+             }
+         } catch (e) {
+             console.log('Login failed with error: ' + e.message);
+         }
+     }
 
     return (
     <Container style={{
@@ -148,6 +160,17 @@ export default function SignInScreen({navigation, route}) {
                     buttonStyle={{ ...styles.button, ...styles.buttonSignUp }}
                     titleStyle={styles.titleSignUp}
                 />
+
+                <View>
+                    <Button
+                        title='Login Facebook'
+                        onPress={loginFb}
+                        buttonStyle={{ ...styles.button, ...styles.buttonSignUp }}
+                        titleStyle={styles.titleSignUp}
+                    />
+
+                </View>
+
             </ScrollView>
         </View>
 

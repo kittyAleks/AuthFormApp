@@ -1,8 +1,90 @@
-import React, {useEffect, useState} from 'react'
-import {View, StatusBar, StyleSheet, ActivityIndicator, ImageBackground, Image, ScrollView, TouchableOpacity} from 'react-native'
+import React, {useCallback, useEffect, useState} from 'react'
+import {
+    View,
+    StatusBar,
+    StyleSheet,
+    ActivityIndicator,
+    ImageBackground,
+    Image,
+    ScrollView,
+    TouchableOpacity,
+    Button, Linking, TextInput
+} from 'react-native'
 import { Container, InputGroup, Input, Text, Button as NBButton, Icon as NBIcon} from 'native-base'
+import { captureScreen } from 'react-native-view-shot';
 
+let facebookParameters = "";
 export default function SettingsScreen({navigation}) {
+    const [image, setImage] = useState(null);
+    const [FacebookShareURL, setFacebookShareURL] = useState('https://aboutreact.com');
+    const [FacebookShareMessage, setFacebookShareMessage] = useState('Hello Guys, This is a testing of facebook share example');
+
+    const takeSnapshot = () => {
+        captureScreen({
+            format: "jpg",
+            quality: 0.8
+        })
+            .then((uri) => {
+                setImage({uri})
+            })
+
+    };
+
+    // const shareImg = async () => {
+    //     const shareOptions = {
+    //         title: 'Share file',
+    //         url: image.uri,
+    //     };
+    //     try {
+    //         const Shareresponse = Share.shareSingle(shareOptions);
+    //         console.log('QQQ Shareresponse', Shareresponse)
+    //     } catch (e) {
+    //         e && console.log(e);
+    //     }
+    //     console.log('QQQ shareOptions' , shareOptions);
+    // };
+
+    const shareImg = () => {
+        const shareOptions = {
+            title: 'Share file',
+            url: image.uri,
+        };
+        let FacebookShareURL = FacebookShareURL;
+        let FacebookShareMessage = FacebookShareMessage;
+        if(FacebookShareURL !== undefined)
+        {
+            if(facebookParameters.includes("?") === false)
+            {
+                facebookParameters = facebookParameters+"?u="+encodeURI(FacebookShareURL);
+            }else{
+                facebookParameters = facebookParameters+"&u="+encodeURI(FacebookShareURL);
+            }
+        }
+        if(FacebookShareMessage !== undefined)
+        {
+            if(facebookParameters.includes("?") === false)
+            {
+                facebookParameters = facebookParameters+"?quote="+encodeURI(FacebookShareMessage);
+            }else{
+                facebookParameters = facebookParameters+"&quote="+encodeURI(FacebookShareMessage);
+            }
+        }
+        let url = 'https://www.facebook.com/' + facebookParameters;
+        console.log('QQQ Url', url);
+        Linking.openURL(url)
+            .then((data) => {
+                if (!data) {
+                    console.log('Can\'t handle url: ' + url);
+                } else {
+                    return Linking.openURL(url);
+                }
+            alert('Facebook Opened');
+        }).catch(() => {
+            alert('Something went wrong');
+        });
+    };
+
+
     return (
         <Container style={{
             flex: 1,
@@ -16,10 +98,22 @@ export default function SettingsScreen({navigation}) {
                 </ImageBackground>
                 <ScrollView style={styles.mainTextStyle}>
                     <View style={styles.center}>
-                        <Text style={styles.title}>Welcome</Text>
-                        <Text style={{ ...styles.title, ...styles.info }}>
-                            SettingsScreen
-                        </Text>
+                        <Text>Hello</Text>
+                        <View>
+                            {image ?
+                                <TouchableOpacity>
+                                <Image
+                                    fadeDuration={0}
+                                    resizeMode="contain"
+                                    style={styles.imageContainer}
+                                    source={image}
+                                />
+                                </TouchableOpacity> :
+                                <Text>Image is not defined</Text>
+                            }
+                        </View>
+                        <Button onPress={takeSnapshot} title='Take Snapshot'></Button>
+                        <Button onPress={shareImg} title='Share Snapshot'></Button>
                     </View>
                 </ScrollView>
             </View>
@@ -28,12 +122,7 @@ export default function SettingsScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-    mainTextStyle: {
-        flexDirection: 'column',
-        paddingHorizontal: 30,
-        textAlign: 'center',
-        paddingVertical: 200,
-    },
+
     titleSignUp: {
         color: 'white',
     },
@@ -42,13 +131,20 @@ const styles = StyleSheet.create({
         color: '#fff',
         textAlign: 'center'
     },
-    center: {
-        paddingTop: 3,
-    },
+
     info: {
         fontSize: 20,
         marginHorizontal: 20,
         margin: 20
+    },
+    imageContainer: {
+        marginBottom: 10,
+        marginLeft: 10,
+        opacity: 0.9,
+        height: 250, width: 250,
+        marginTop: 10,
+        borderBottomLeftRadius: 25,
+        borderTopLeftRadius: 10,
     },
 });
 
