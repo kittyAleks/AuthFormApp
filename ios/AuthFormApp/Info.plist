@@ -10,6 +10,11 @@
     <key>NSPhotoLibraryAddUsageDescription</key>
     <string>$(PRODUCT_NAME) wants to save photos</string>
 
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>AuthFormApp requires photo library access</string>
+    <key>NSCameraUsageDescription</key>
+    <string>AuthFormApp requires camera access to take photo</string>
+
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>

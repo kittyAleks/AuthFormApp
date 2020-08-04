@@ -53,8 +53,8 @@ export default function ProfileScreen({navigation, route}) {
             cropping: true,
             compressImageQuality: 0.7
         }).then(image => {
-            console.log(image);
-            // setImage(image.path);
+            console.log('QQQ image',image);
+            setImage(image.path);
             //bs.current.snapTo(1);
         });
     }
