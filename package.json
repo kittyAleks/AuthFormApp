@@ -37,7 +37,9 @@
     "react-native-vector-icons": "^6.6.0",
     "react-native-view-shot": "^3.1.2",
     "react-navigation-header-buttons": "^4.0.2",
+    "react-redux": "^7.2.1",
     "reanimated-bottom-sheet": "^1.0.0-alpha.20",
+    "redux": "^4.0.5",
     "swagger-client": "^3.10.7"
   },
   "devDependencies": {

@@ -1,5 +1,15 @@
 import React, {useState, useEffect} from 'react'
-import {View, StyleSheet, ImageBackground, Image, ScrollView, Alert, Button, FlatList} from 'react-native'
+import {
+    View,
+    StyleSheet,
+    ImageBackground,
+    Image,
+    ScrollView,
+    Alert,
+    Button,
+    FlatList,
+    ActivityIndicatorComponent, ActivityIndicator
+} from 'react-native'
 import {Container, Input, InputGroup, Text} from 'native-base'
 import {DATA} from "../data";
 import {MainProductList} from "../components/MainProductList";
@@ -8,7 +18,52 @@ import LinearGradient from "react-native-linear-gradient";
 
 export default function MainScreen({navigation, route}) {
     // const item  = route.params;
-    console.log('QQQ MainScreen route.params', route.params)
+    const [allProducts, setAllProducts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        getAllProducts();
+
+    }, []);
+
+    let getAllProducts = async () => {
+        await fetch('http://localhost/getallproducts', {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+        })
+            .then(res => res.json())
+            .then((result) => {
+                const res = result.result;
+                setAllProducts(res);
+                setIsLoading(false)
+            })
+            .catch((err) => {
+                console.log('[Error]', err.message);
+            });
+    };
+
+    console.log('AAA allProducts', allProducts);
+
+
+    // let updateChat = async () => {
+    //     let res = await fetch('http://localhost/get_all', {
+    //         method: 'GET',
+    //         headers: {'Content-Type': 'application/json'},
+    //     });
+    //     let messages = await res.json();
+    //     messages.reverse();
+    //     let i = 0;
+    //     setMessages(messages.map(messageText => ({
+    //         _id: ++i,
+    //         text: messageText,
+    //         user: {
+    //             _id: 1,
+    //             name: 'TestUser',
+    //             avatar: 'https://placeimg.com/140/140/any',
+    //         },
+    //     })));
+    // };
+
 
     const signOut = () => {
         // fetch('http://localhost/signout',{
@@ -56,20 +111,9 @@ export default function MainScreen({navigation, route}) {
         );
 
     };
-    // firebase.auth().signOut().then(() => {
-    //     navigation.navigate('Back')
-    // })
-    //     .catch((err) => {
-    //         console.log('Ошибка', err.message)
-    //     })
-    //     .catch(error => this.setState({errorMessage: error.message}))
-
-    // useEffect(() => {
-    //     setEmail(firebase.auth().currentUser.email)
-    // }, []);
 
     const openProductCategoryScreen = item => {
-        console.log('EEE ITEM', item)
+        console.log('EEE openProductCategoryScreen item', item)
         navigation.navigate('ProductCategoryScreen', {
             item: item,
             // liked_by_user: item.liked_by_user
@@ -87,17 +131,21 @@ export default function MainScreen({navigation, route}) {
                     blurRadius={2}>
                 </ImageBackground>
             </View>
-            <View style={{flex: 1}}>
-                <Text style={{color: 'white', textAlign: 'center', fontSize: 18}}>Hello</Text>
-                <FlatList
-                    data={DATA}
-                    keyExtractor={(item, index) => item.id.toString()}
-                    renderItem={({item}) =>
-                        <MainProductList item={item} onOpen={openProductCategoryScreen}
-                        />
-                    }
-                />
-            </View>
+            {isLoading ?
+                <View>
+                    <ActivityIndicator size='large' color={'#ffffff'}/>
+                </View> :
+                <View style={{flex: 1}}>
+                    <FlatList
+                        data={allProducts}
+                        keyExtractor={(item, index) => item.id.toString()}
+                        renderItem={({item}) => {
+                            return <MainProductList item={item} onOpen={openProductCategoryScreen}
+                            />
+                        }}
+                    />
+                </View>
+            }
             <Button title='Logout' size={30} onPress={signOut} color={'white'}/>
         </Container>
     )

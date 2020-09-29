@@ -7,7 +7,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 export default function ProductCategoryScreen({navigation, route}) {
 
     const { item } = route.params;
-    console.log('EEE ProductCategoryScreen item', item.list_products_in_category );
+    console.log('EEE ProductCategoryScreen item', item );
 
     return (
         <Container style={{
@@ -33,13 +33,13 @@ export default function ProductCategoryScreen({navigation, route}) {
                 </InputGroup>
                 <ScrollView>
                     <View style={styles.mainContainer}>
-                        {item.list_products_in_category.map(item => {
-                            return <View key={item.id}>
+                        {/*{item.list_products_in_category.map(item => {*/}
+                             <View key={item.id}>
                                 <TouchableOpacity onPress={() => navigation.navigate('DetailProductScreen', {item: item})}>
                                     <Image style={styles.imageContainer}
                                            source={{ uri: item.product_image_in_category }}/>
                                         <View style={styles.textContainer}>
-                                            <Text style={{fontSize: 18, color: '#696969'}}>{item.product_name_in_category}</Text>
+                                            <Text style={{fontSize: 18, color: '#696969'}}>{item.product_name}</Text>
                                             <View style={{flexDirection: 'row', justifyContent: 'space-between', }}>
                                                 <Text style={{fontSize: 20}}>{'$ '}{item.price_category}</Text>
                                                 <Ionicons onPress={() => alert('hi')} style={{fontSize: 22, color: '#e9943b'}}
@@ -49,7 +49,7 @@ export default function ProductCategoryScreen({navigation, route}) {
                                         </View>
                                 </TouchableOpacity>
                             </View>
-                        })}
+                        {/*})}*/}
                     </View>
                 </ScrollView>
             </View>

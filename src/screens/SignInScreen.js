@@ -160,7 +160,6 @@ export default function SignInScreen({navigation, route}) {
                     buttonStyle={{ ...styles.button, ...styles.buttonSignUp }}
                     titleStyle={styles.titleSignUp}
                 />
-
                 <View>
                     <Button
                         title='Login Facebook'

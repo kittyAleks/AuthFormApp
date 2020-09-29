@@ -1,6 +1,7 @@
 let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
+const fs = require ("fs");
 let bcrypt = require('bcrypt');
 let mysql = require('mysql2');
 const db = mysql.createConnection({
@@ -12,6 +13,7 @@ const db = mysql.createConnection({
 
 db.connect(err => {
     if(err) {
+        console.log('error')
         throw err
     }
     console.log('MySQL connected')
@@ -21,6 +23,7 @@ db.connect(err => {
 
 let messages = [];
 let users = [];
+let avatar = [];
 
 app.use(bodyParser.json());
 
@@ -139,6 +142,35 @@ app.post('/send', (req, res) => {
 app.get('/get_all', (req, res) => {
     res.json(messages);
 });
+
+/* User ProfileScreen */
+
+app.post('/send_user_avatar', async (req, res) => {
+    const user_avatar = req.body;
+    let sql = 'INSERT INTO user_profile SET ?';
+    await db.query(sql, user_avatar);
+    res.json({user_avatar, status: 200});
+
+});
+app.post('/send_input_user_info', async (req, res) => {
+    console.log('AAA req.body', req.body);
+    const {location, email, phone} = req.body;
+    let user_info = {location: location, email: email, phone: phone}
+    let sql = 'INSERT INTO user_info SET ?';
+    let [result] = await db.query(sql, user_info);
+    console.log('result',[result]);
+    res.json({user_info, status: 200});
+});
+
+/* GET all products in MainScreen */
+app.get('/getallproducts', (req, res) => {
+    let sql = 'SELECT * FROM product_data';
+    db.query(sql, (err, result) => {
+        console.log('AAA result server allproducts',result);
+        res.json({result, status: 'All products received'});
+    })
+});
+
 
 /* Form Registration */
 

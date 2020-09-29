@@ -1,5 +1,16 @@
 import React, {useEffect, useState} from 'react'
-import {View, StatusBar, StyleSheet, ActivityIndicator, ImageBackground, Image, ScrollView, TouchableOpacity, TextInput } from 'react-native'
+import {
+    View,
+    StatusBar,
+    StyleSheet,
+    ActivityIndicator,
+    ImageBackground,
+    Image,
+    ScrollView,
+    TouchableOpacity,
+    TextInput,
+    Button
+} from 'react-native'
 import { Container, InputGroup, Input, Text, Button as NBButton, Icon as NBIcon} from 'native-base'
 import Ionicons from "react-native-vector-icons/Ionicons"
 import { Avatar, Title, Caption, TouchableRipple } from 'react-native-paper'
@@ -45,19 +56,81 @@ export default function ProfileScreen({navigation, route}) {
             phone: val,
         })
     };
-    const choosePhotoFromLibrary = () => {
-        console.log('ImagePicker ', ImagePicker);
+
+    const choosePhotoFromLibrary = async () => {
         ImagePicker.openPicker({
             width: 300,
             height: 300,
             cropping: true,
             compressImageQuality: 0.7
         }).then(image => {
-            console.log('QQQ image',image);
-            setImage(image.path);
-            //bs.current.snapTo(1);
+            let user_avatar = image.path;
+            if(user_avatar) {
+                uploadImage(user_avatar)
+            }
         });
-    }
+    };
+
+    const uploadImage = async (avatar) => {
+        let user_avatar = encodeURIComponent(avatar);
+        console.log('AAA user_avatar', user_avatar)
+
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'},
+            body: JSON.stringify(
+                {
+                    user_avatar: user_avatar,
+                }
+            )
+        };
+
+        fetch('http://localhost/send_user_avatar', requestOptions)
+            .then(res => res.json())
+            .then((result) => {
+                if(result.status === 200) {
+                    setImage(user_avatar)
+                }
+            })
+            .catch((err) => {
+                console.log('[Error]', err.message);
+            });
+    };
+
+    // const takePhoto = () => {
+    //     console.log('ImagePicker ', ImagePicker);
+    //     ImagePicker.openCamera({
+    //         width: 300,
+    //         height: 400,
+    //         cropping: true,
+    //     }).then(image => {
+    //         console.log(image);
+    //     });
+    // };
+    const optionInputUserInfo = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'},
+        body: JSON.stringify({
+            location: inputText.location,
+            email: inputText.email,
+            phone: inputText.phone,
+        })
+    };
+    console.log('AAA optionInputUserInfo', optionInputUserInfo);
+    const saveInputUserInfo = async () => {
+        await fetch('http://localhost/send_input_user_info', optionInputUserInfo)
+            .then(res => res.json())
+            .then((result) => {
+                console.log('AAA result', result)
+            })
+            .catch((err) => {
+                console.log('[Error]', err.message);
+            });
+    };
 
     const renderContent = () => (
         <View style={styles.panel}>
@@ -114,6 +187,7 @@ export default function ProfileScreen({navigation, route}) {
                 <Animated.View style={{opacity: Animated.add(0.3, Animated.multiply(fall, 1.0)),}}>
                 <ScrollView>
                 <View style={styles.userInfoSection}>
+                    {image &&
                     <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
                         <View style={{
                             flexDirection: 'column',
@@ -144,7 +218,7 @@ export default function ProfileScreen({navigation, route}) {
                                 }]}>Gabriel Macht</Title>
                             </View>
                         </View>
-                    </TouchableOpacity>
+                    </TouchableOpacity>}
                 </View>
 
                 <View style={styles.userInfoSection}>
@@ -164,7 +238,7 @@ export default function ProfileScreen({navigation, route}) {
                         <TextInput
                             style={styles.textArea}
                             underlineColorAndroid="transparent"
-                            placeholder='+(380) 99-751-22-2'
+                            placeholder='+(380) 00-000-00-00'
                             placeholderTextColor="white"
                             onChangeText={handlePhoneChange}
                             // value={text}
@@ -181,6 +255,7 @@ export default function ProfileScreen({navigation, route}) {
                             // value={text}
                         />
                     </View>
+                    <Button title='Save my data' onPress={saveInputUserInfo} size={25} color={"#ff2a34"}/>
                 </View>
 
                 <View style={styles.infoBoxWrapper}>
@@ -231,7 +306,7 @@ export default function ProfileScreen({navigation, route}) {
 const styles = StyleSheet.create({
     userInfoSection: {
         paddingHorizontal: 30,
-        marginBottom: 20,
+        marginBottom: 15,
     },
     userInfoText: {
         color: '#eeeeee', marginLeft: 20, fontSize: 18

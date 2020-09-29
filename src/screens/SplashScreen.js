@@ -1,5 +1,15 @@
 import React, {useEffect, useState} from 'react'
-import {View, StatusBar, StyleSheet, ActivityIndicator, ImageBackground, Image, ScrollView, TouchableOpacity} from 'react-native'
+import {
+    View,
+    StatusBar,
+    StyleSheet,
+    ActivityIndicator,
+    ImageBackground,
+    Image,
+    ScrollView,
+    TouchableOpacity,
+    TextInput
+} from 'react-native'
 import { Container, InputGroup, Input, Text, Button as NBButton, Icon as NBIcon} from 'native-base'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Button } from 'react-native-elements'
@@ -24,7 +34,6 @@ export default function SplashScreen({navigation}) {
                             to my app
                         </Text>
                     </View>
-
                     <Button
                         title='SIGN IN'
                         onPress={() => navigation.navigate('SignIn')}
@@ -102,6 +111,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         margin: 20
     },
+
 });
 
 

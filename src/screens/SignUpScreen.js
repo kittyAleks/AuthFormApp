@@ -171,10 +171,7 @@ export default function SignUpScreen({navigation}) {
 
     const handlePasswordChange = (val) => {
         console.log('Password value', val)
-        setData({
-            ...data,
-            password: val,
-        })
+        setData(val)
     };
     const handleConfirmPasswordChange = (val) => {
         setData({
