@@ -164,6 +164,8 @@ app.post('/send_input_user_info', async (req, res) => {
 
 /* GET all products in MainScreen */
 app.get('/getallproducts', (req, res) => {
+    // let quantity = 1; //количество записей, которые будут выводиться на одной странице
+    // let limit = 3; // Ограничиваем количество ссылок, которые будут выводиться перед и после текущей страницы
     let sql = 'SELECT * FROM product_data';
     db.query(sql, (err, result) => {
         console.log('AAA result server allproducts',result);

@@ -15,7 +15,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { Button } from 'react-native-elements'
 
 export default function SplashScreen({navigation}) {
-
     return (
         <Container style={{
             flex: 1,

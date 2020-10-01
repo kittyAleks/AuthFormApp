@@ -1,49 +1,36 @@
 import React, {useState, useEffect} from 'react'
-import {
-    View,
-    StyleSheet,
-    ImageBackground,
-    Image,
-    ScrollView,
-    Alert,
-    Button,
-    FlatList,
-    ActivityIndicatorComponent, ActivityIndicator
-} from 'react-native'
+import { View, StyleSheet, ImageBackground, Image, Alert, Button, FlatList, ActivityIndicator } from 'react-native'
 import {Container, Input, InputGroup, Text} from 'native-base'
-import {DATA} from "../data";
 import {MainProductList} from "../components/MainProductList";
 // import * as firebase from "firebase";
-import LinearGradient from "react-native-linear-gradient";
+import { useDispatch, useSelector } from "react-redux"
+import { getProducts, loadMoreProducts } from '../store/actions/mainProductsAction'
 
 export default function MainScreen({navigation, route}) {
     // const item  = route.params;
-    const [allProducts, setAllProducts] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    // const [allProducts, setAllProducts] = useState([]);
+    // const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        getAllProducts();
+    // useEffect(() => {
+    //     getAllProducts();
+    //
+    // }, []);
 
-    }, []);
-
-    let getAllProducts = async () => {
-        await fetch('http://localhost/getallproducts', {
-            method: 'GET',
-            headers: {'Content-Type': 'application/json'},
-        })
-            .then(res => res.json())
-            .then((result) => {
-                const res = result.result;
-                setAllProducts(res);
-                setIsLoading(false)
-            })
-            .catch((err) => {
-                console.log('[Error]', err.message);
-            });
-    };
-
-    console.log('AAA allProducts', allProducts);
-
+    // let getAllProducts = () => {
+    //     fetch('http://localhost/getallproducts', {
+    //         method: 'GET',
+    //         headers: {'Content-Type': 'application/json'},
+    //     })
+    //         .then(res => res.json())
+    //         .then((result) => {
+    //             const res = result.result;
+    //             setAllProducts(res);
+    //             setIsLoading(false)
+    //         })
+    //         .catch((err) => {
+    //             console.log('[Error]', err.message);
+    //         });
+    // };
 
     // let updateChat = async () => {
     //     let res = await fetch('http://localhost/get_all', {
@@ -64,6 +51,19 @@ export default function MainScreen({navigation, route}) {
     //     })));
     // };
 
+    const dispatch = useDispatch();
+    const products = useSelector(state => state.allProducts);
+    const isLoading = useSelector(state => state.isLoading);
+    useEffect( () => {
+        getProducts(1)
+            .then(products => {dispatch(products);
+            }).catch(err => {
+            console.log("ERR", err);
+        });
+
+    }, [dispatch]);
+
+    console.log('AAA products', products);
 
     const signOut = () => {
         // fetch('http://localhost/signout',{
@@ -113,12 +113,26 @@ export default function MainScreen({navigation, route}) {
     };
 
     const openProductCategoryScreen = item => {
-        console.log('EEE openProductCategoryScreen item', item)
         navigation.navigate('ProductCategoryScreen', {
             item: item,
             // liked_by_user: item.liked_by_user
         })
     };
+    const renderFooter = () => {
+        if(!isLoading) {
+            return <View style={{paddingVertical: 30}}>
+                <ActivityIndicator size='large' color={'#DD2000'}/>
+            </View>
+        } else return null
+    };
+
+
+    const showMore = (page) => {
+        let pages = page + 1;
+        loadMoreProducts(pages)
+            .then(products => dispatch(products))
+    };
+
     return (
         <Container style={{
             flex: 1,
@@ -131,21 +145,21 @@ export default function MainScreen({navigation, route}) {
                     blurRadius={2}>
                 </ImageBackground>
             </View>
-            {isLoading ?
-                <View>
-                    <ActivityIndicator size='large' color={'#ffffff'}/>
-                </View> :
+
                 <View style={{flex: 1}}>
                     <FlatList
-                        data={allProducts}
-                        keyExtractor={(item, index) => item.id.toString()}
+                        data={products}
+                        keyExtractor={(item, index) => index.toString()}
+                        onEndReached={showMore}
+                        onEndReachedThreshold={0.5}
+                        ListFooterComponent={renderFooter}
                         renderItem={({item}) => {
                             return <MainProductList item={item} onOpen={openProductCategoryScreen}
                             />
                         }}
                     />
                 </View>
-            }
+
             <Button title='Logout' size={30} onPress={signOut} color={'white'}/>
         </Container>
     )
